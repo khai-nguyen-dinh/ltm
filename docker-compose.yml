@@ -4,9 +4,11 @@ services:
   rss-reader:
     image: khainguyendinh/note:latest
     volumes:
-      - ./a/:/a/
+    - ./a/:/a/
     networks:
     - docker_back-tier
+    ports:
+    - 80:9000
     hostname: note
     tty: true
 
