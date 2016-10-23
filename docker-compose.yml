@@ -6,10 +6,10 @@ services:
     volumes:
       - ./a/:/a/
     networks:
-    - back-tier
+    - docker_back-tier
     hostname: note
     tty: true
 
 networks:
-  back-tier:
+  docker_back-tier:
     external: true
