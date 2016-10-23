@@ -258,7 +258,7 @@ public class Application extends Controller {
             renderJSON(result);
         }
     }
-    public static void getnoteAPI(String id) {
+    public static void getnoteAPI(Long id) {
 
         List<Post> post = Post.find("author.id=? order by postedAt desc", id).fetch();
         renderJSON(post);
