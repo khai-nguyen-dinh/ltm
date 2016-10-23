@@ -14,7 +14,6 @@ RUN apt-get -y -q install oracle-java7-installer
 RUN update-java-alternatives -s java-8-oracle
 RUN wget https://downloads.typesafe.com/play/1.3.4/play-1.3.4.zip
 RUN unzip play-1.3.4.zip
-RUN PATH=$PATH:play-1.3.4
-RUN export PATH
+RUN mv play-1.3.4 /opt/
 
 
