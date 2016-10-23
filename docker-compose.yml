@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  rss-reader:
+    image: khainguyendinh/note:latest
+    volumes:
+      - ./a/:/a/
+    networks:
+    - back-tier
+    hostname: note
+    tty: true
+
+networks:
+  back-tier:
+    external: true
