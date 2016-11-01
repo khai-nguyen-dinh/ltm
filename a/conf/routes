@@ -10,8 +10,8 @@ GET         /login                                       Application.loginAPI
 GET         /signup                                      Application.signUpAPI
 GET         /getnote                                     Application.getnoteAPI
 GET         /addnote                                     Application.addNoteAPI
-GET         /update
-GET         /delete
+GET         /update                                      Application.updateNoteAPI
+GET         /delete                                      Application.deleteNoteAPI
 # Ignore favicon requests
 GET         /favicon.ico                            404
 

@@ -10,8 +10,6 @@ import play.mvc.Controller;
 import java.util.List;
 
 //----------------------INDEX--------------
-
-
 public class Application extends Controller {
 
     public static User users;
@@ -24,17 +22,12 @@ public class Application extends Controller {
         }
     }
 
-
     //------CODE----
-
     public static void dk() {
         render();
     }
 
-
 //------------------------sigUp-----------------------
-
-
     public static void signUp(String username, String password, String fullname, String adress) {
         User user = User.find("username=? and password=?", username, password).first();
         User temp = User.find("username=?", username).first();
@@ -45,16 +38,14 @@ public class Application extends Controller {
         if (username.equals("") | password.equals("")) {
             flash.error("Oop!nhap thieu du lieu");
             loi();
+        } else if (check_length(password) == false) {
+            flash.error("Oop!password khong du do dai!");
+            loi();
         } else {
-            if (check_length(password) == false) {
-                flash.error("Oop!password khong du do dai!");
-                loi();
-            } else {
-                User u = new User(username, password, fullname, adress);
-                u.save();
-                flash.success("thank you signUp %s", username);
-                render();
-            }
+            User u = new User(username, password, fullname, adress);
+            u.save();
+            flash.success("thank you signUp %s", username);
+            render();
         }
 
     }
@@ -68,8 +59,6 @@ public class Application extends Controller {
     }
 
 //---------------------signIn----------------------------
-
-
     public static void signIn() {
         render();
     }
@@ -87,19 +76,13 @@ public class Application extends Controller {
         }
     }
 
-
 //-----------------------logOut----------------------
-
-
     public static void logOut() {
         Cache.clear();
         signIn();
     }
 
-
 //--------------------Comment------------------------
-
-
     public static void Comment() {
 
         List<Post> post = Post.find("author.id=? order by postedAt desc", users.getId()).fetch();
@@ -107,7 +90,6 @@ public class Application extends Controller {
 
         render(post, size);
     }
-
 
     public static void postComment(String content) {
 
@@ -148,7 +130,6 @@ public class Application extends Controller {
         render(post);
     }
 
-
     public static void deleteNote(Post post) {
 
         Post p = Post.find("content = ?", post.content).first();
@@ -166,7 +147,6 @@ public class Application extends Controller {
         render();
     }
 
-
     public static void chatroom() {
         List<chat> c = chat.find("order by date asc").fetch();
         render(c);
@@ -180,12 +160,10 @@ public class Application extends Controller {
         chatroom();
     }
 
-
     public static void share(Post post) {
         render(post);
 
     }
-
 
     public static void shared(Post post, String username) {
         User user = User.find("username = ?", username).first();
@@ -201,17 +179,16 @@ public class Application extends Controller {
     }
     //--------CHECK-TEMP------------
 
-
     public static void temp(boolean a) {
         if (a == true) {
             flash.success("You are sign in");
             login();
-        } else
+        } else {
             flash.error("invalid username.please try again");
+        }
         signIn();
 
     }
-
 
     public static boolean check_length(String password) {
         if (password.length() < 4 || password.length() > 11) {
@@ -230,9 +207,7 @@ public class Application extends Controller {
         }
     }
 
-
     //api
-
     public static void loginAPI(String username, String password) {
         users = User.find("username=? and password=?", username, password).first();
         if (users != null) {
@@ -244,43 +219,45 @@ public class Application extends Controller {
 
     }
 
-
     public static void signUpAPI(String username, String password, String fullname, String adress) {
         User user = User.find("username=? and password=?", username, password).first();
         User temp = User.find("username=?", username).first();
         if (user != null || temp != null) {
             Result result = new Result("existed");
             renderJSON(result);
-        }else{
+        } else {
             User u = new User(username, password, fullname, adress);
             u.save();
             Result result = new Result("done");
             renderJSON(result);
         }
     }
+
     public static void getnoteAPI(Long id) {
 
         List<Post> post = Post.find("author.id=? order by postedAt desc", id).fetch();
         renderJSON(post);
     }
 
-
-    public static void addNoteAPI(Long id, String content){
+    public static void addNoteAPI(Long id, String content) {
         User u = User.findById(id);
         Post p = new Post(u, content);
         p.save();
         Result result = new Result("done");
         renderJSON(result);
     }
-    public static void updateNoteAPI(Long id,Long pid, String content){
-        User u = User.findById(id);
-        List<Post> p = Post.find("author.id=?", id).fetch();
-        for(Post po : p){
-            if(po.getId()==pid){
-                po.content = content;
-                po.save();
-            }
-        }
+
+    public static void updateNoteAPI(Long id, String content) {
+        Post p = Post.findById(id);
+        p.content = content;
+        p.save();
+        Result result = new Result("done");
+        renderJSON(result);
+    }
+
+    public static void deleteNoteAPI(Long id) {
+        Post p = Post.findById(id);
+        p.delete();
         Result result = new Result("done");
         renderJSON(result);
     }
