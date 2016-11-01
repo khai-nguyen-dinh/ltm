@@ -272,4 +272,16 @@ public class Application extends Controller {
         Result result = new Result("done");
         renderJSON(result);
     }
+    public static void updateNoteAPI(Long id,Long pid, String content){
+        User u = User.findById(id);
+        List<Post> p = Post.find("author.id=?", id).fetch();
+        for(Post po : p){
+            if(po.getId()==pid){
+                po.content = content;
+                po.save();
+            }
+        }
+        Result result = new Result("done");
+        renderJSON(result);
+    }
 }
