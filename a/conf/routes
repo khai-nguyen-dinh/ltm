@@ -10,13 +10,13 @@ GET         /login                                       Application.loginAPI
 GET         /signup                                      Application.signUpAPI
 GET         /getnote                                     Application.getnoteAPI
 GET         /addnote                                     Application.addNoteAPI
-GET         /update                                      Application.updateNoteAPI
-GET         /delete                                      Application.deleteNoteAPI
+GET         /updatenote                                  Application.updateNoteAPI
+GET         /deletenote                                  Application.deleteNoteAPI
 # Ignore favicon requests
-GET         /favicon.ico                            404
+GET         /favicon.ico                               404
 
 # Map static resources from the /app/public folder to the /public path
-GET         /public/                                     staticDir:        public
+GET         /public/                                     staticDir:public
 
 # Catch all
-*       /{controller}/{action}                  {        controller}.{        action}
+*       /{controller}/{action}                          {controller}.{action}
