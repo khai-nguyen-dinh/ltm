@@ -9,6 +9,7 @@ POST    /                                           Application.PosttoJSON
 GET     /login                                      Application.loginAPI
 GET     /signup                                      Application.signUpAPI
 GET     /getnote                                      Application.getnoteAPI
+GET     /addnote                                       Application.addNoteAPI
 # Ignore favicon requests
 GET     /favicon.ico                            404
 
