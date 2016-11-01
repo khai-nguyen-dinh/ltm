@@ -263,4 +263,13 @@ public class Application extends Controller {
         List<Post> post = Post.find("author.id=? order by postedAt desc", id).fetch();
         renderJSON(post);
     }
+
+
+    public static void addNoteAPI(Long id, String content){
+        User u = User.findById(id);
+        Post p = new Post(u, content);
+        p.save();
+        Result result = new Result("done");
+        renderJSON(result);
+    }
 }
