@@ -30,6 +30,7 @@ services:
       hostname: mysql
       cpu_shares: 512
       mem_limit: 1073741824
+      tty: true
 
     phpmyadmin:
       image: phpmyadmin/phpmyadmin
@@ -42,6 +43,7 @@ services:
       hostname: phpmyadmin
       cpu_shares: 512
       mem_limit: 536870912
+      tty: true
 
 networks:
     # front-tier:
