@@ -1,17 +1,48 @@
-version: '2'
+version: "2"
 
 services:
-  rss-reader:
-    image: khainguyendinh/note:latest
-    volumes:
-    - ./a/:/a/
-    networks:
-    - docker_back-tier
-    ports:
-    - 80:9000
-    hostname: note
-    tty: true
+    note:
+      image: note:1.0
+      ports:
+        - "80:8080"
+        - "81:9000"
+      volumes:
+        - ./:/home/note/
+      networks:
+          - back-tier
+      cpu_shares: 512
+      mem_limit: 536870912
+      tty: true
+    mysql:
+      image: mysql:5.7
+      # volumes:
+      #     - ./mysql-data/:/var/lib/mysql/
+      #     - ./mysql-data/:/docker-entrypoint-initdb.d/
+      environment:
+          - MYSQL_ROOT_PASSWORD=nguyendinhkhai
+          - MYSQL_USER=note
+          - MYSQL_PASSWORD=note@123
+          - MYSQL_DATABASE=note
+      ports:
+          - "127.0.0.1:3307:3306"
+      networks:
+          - back-tier
+      hostname: mysql
+      cpu_shares: 512
+      mem_limit: 1073741824
+
+    phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      links:
+          - mysql:db
+      ports:
+          - "82:80"
+      networks:
+          - back-tier
+      hostname: phpmyadmin
+      cpu_shares: 512
+      mem_limit: 536870912
 
 networks:
-  docker_back-tier:
-    external: true
+    # front-tier:
+    back-tier:
