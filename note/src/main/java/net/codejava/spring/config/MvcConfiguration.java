@@ -38,7 +38,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     public DataSource getDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://mysql:3306/note");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/note");
         dataSource.setUsername("root");
         dataSource.setPassword("nguyendinhkhai");
 
